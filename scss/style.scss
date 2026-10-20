@@ -1,0 +1,308 @@
+// ==========================================================
+// INM320 Assignment 3: CSS Precompiler
+// Converted from "for your reference.css" to Sass (SCSS)
+// ==========================================================
+
+
+// ---------- VARIABLES ----------
+$font-body: Quando;
+$font-heading: 'Josefin Sans', sans-serif;
+
+$color-text: #787878;
+$color-dark: #111111;
+$color-grey: #999999;
+$color-navy: #324360;
+$color-teal: #35c4ce;
+$color-footer-bg: #eaf2ff;
+$color-footer-text: #989898;
+$color-subnav-bg: #f0f0f0;
+$color-subnav-border: #e9e9e9;
+$color-white: #ffffff;
+
+$logo-width: 200px;
+$breakpoint-tablet: 650px;
+
+
+// ---------- MIXINS ----------
+
+// Link colour with a hover colour
+@mixin link-colors($color, $hover-color) {
+    color: $color;
+
+    &:hover {
+        color: $hover-color;
+    }
+}
+
+// Uppercase, spaced-out text (nav links, social links)
+@mixin uppercase-text($size, $spacing: 1px) {
+    text-transform: uppercase;
+    font-size: $size;
+    letter-spacing: $spacing;
+}
+
+// Centered logo block
+@mixin logo-block($margin) {
+    width: $logo-width;
+    margin: $margin;
+}
+
+// Media query for tablet and up
+@mixin tablet-up {
+    @media only screen and (min-width: $breakpoint-tablet) {
+        @content;
+    }
+}
+
+
+// ---------- BASE ----------
+body {
+    font-family: $font-body;
+    font-size: 15px;
+    color: $color-text;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+p {
+    margin-bottom: 25px;
+    line-height: 1.6em;
+}
+
+a {
+    font-weight: 400;
+    text-decoration: none;
+    transition: .20s;
+    @include link-colors($color-dark, $color-grey);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    font-family: $font-heading;
+    font-weight: 400;
+    line-height: 1.3em;
+    word-wrap: break-word;
+    color: $color-dark;
+}
+h1 { font-size: 37px; }
+h2 { font-size: 31px; }
+h3 { font-size: 26px; }
+h4 { font-size: 21px; }
+h5 { font-size: 18px; }
+h6 { font-size: 15px; }
+
+.container {
+    width: 94%;
+    margin: 0 auto;
+
+    @include tablet-up {
+        width: 90%;
+    }
+}
+
+
+// ---------- HEADER AND MAIN NAV ----------
+header {
+    font-family: $font-heading;
+
+    nav {
+        ul {
+            display: none;
+        }
+
+        @include tablet-up {
+            max-width: 1170px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+
+            ul {
+                display: flex;
+            }
+
+            li {
+                margin: 0 15px;
+                position: relative;
+                line-height: 24px;
+
+                &.menu-item-has-children > a::after {
+                    margin-left: 7px;
+                    font-family: 'Font Awesome 5 Free';
+                    font-size: 13px;
+                    color: $color-navy;
+                    content: '\f078';
+                }
+            }
+
+            a {
+                font-family: $font-heading;
+                font-weight: 900;
+                @include uppercase-text(12px);
+                @include link-colors($color-navy, $color-teal);
+            }
+
+            // sub nav
+            ul ul {
+                visibility: hidden;
+                opacity: 0;
+                display: block;
+                position: absolute;
+                z-index: 9999;
+                left: 0;
+                background: $color-subnav-bg;
+                transition: all 0.2s ease-out;
+
+                li {
+                    border-top: 1px solid $color-subnav-border;
+                    margin: 0;
+                }
+
+                a {
+                    display: block;
+                    color: $color-dark;
+                    min-width: 175px;
+                    margin: 0;
+                    padding: 20px 10px;
+                    line-height: 1.4em;
+                    letter-spacing: 1px;
+                    transition: .35s;
+
+                    &:hover {
+                        background: $color-white;
+                        color: #000;
+                    }
+                }
+            }
+
+            ul li:hover ul {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.current-menu-item a {
+    @include tablet-up {
+        border-bottom: 2px solid $color-navy;
+    }
+}
+
+.top-logo {
+    @include logo-block(20px auto 40px);
+}
+
+
+// ---------- POSTS ----------
+article {
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-part {
+    margin-bottom: 10px;
+
+    @include tablet-up {
+        flex: 1;
+        overflow: hidden;
+        margin-bottom: 0;
+
+        img {
+            transition: transform 3.5s ease-in-out;
+
+            &:hover {
+                transform: scale(1.5, 1.5);
+            }
+        }
+    }
+}
+
+.content-part {
+    @include tablet-up {
+        flex: 1;
+        padding-left: 50px;
+    }
+}
+
+.post-title {
+    margin-top: 0;
+
+    a {
+        font-size: 26px;
+        text-transform: uppercase;
+        font-weight: 900;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        line-height: 1.3em;
+        transition: all .3s ease;
+        @include link-colors($color-navy, $color-teal);
+    }
+}
+
+
+// ---------- FOOTER ----------
+footer {
+    padding: 30px 0;
+    text-align: center;
+    background: $color-footer-bg;
+    color: $color-footer-text;
+}
+
+#footer {
+    a {
+        @include link-colors($color-footer-text, $color-dark);
+    }
+}
+
+.footer-logo {
+    @include logo-block(20px auto);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.footer-social-links {
+    padding: 20px 0;
+    line-height: 2em;
+
+    a {
+        margin: 0 10px;
+        @include uppercase-text(16px);
+
+        span {
+            display: none;
+        }
+
+        @include tablet-up {
+            margin: 0 28px;
+
+            span {
+                display: inline;
+                font-size: 11px;
+            }
+        }
+    }
+
+    i {
+        @include tablet-up {
+            margin-right: 5px;
+        }
+    }
+}
+
+#footer-copyright {
+    padding: 20px 0;
+    font-size: 12px;
+    color: $color-footer-text;
+}
